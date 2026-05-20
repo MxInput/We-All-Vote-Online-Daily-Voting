@@ -17,9 +17,10 @@ function start() {
             event.preventDefault();
         }
         else {
-            fetch('http://localhost:5000/')
-                .then(res => res.text())
-                .then(msg => console.log(msg))
+            fetch('http://localhost:5000/signUp')
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
         }
     }
     )

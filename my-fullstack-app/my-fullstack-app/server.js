@@ -27,16 +27,43 @@ app.post('/signUp', (req, res) => {
             }
         }
 
-        const user = `${signUN}: ${signPW}`
+        let updatedUsers = users
+        updatedUsers[`${signUN}`] = `${signPW}`
 
-        fs.appendFile("login.json", user)
-        res.send(`Registration successful, ${signUN}!`);
+        fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
+            if (err) { console.log(err) }
+        })
+
+        return res.send(`Registration successful, ${signUN}!`);
     } catch (err) {
-        res.send('error');
-        res.redirect('/signUp');
+        return res.send("err");
+        return res.redirect('/');
     }
 });
 
+app.post('/login', (req, res) => {
+    try {
+        const { logUN, logPW } = req.body;
+
+        for (var foundUN in users) {
+            if (logUN == foundUN) {
+                if (logPW == users[foundUN]) {
+                    return res.send(`Login successful, ${logUN}!`);
+
+                }
+                else {
+                    throw new Error("Incorrect Password!")
+                }
+            }
+        }
+
+        throw new Error("User not found!")
+    } catch (err) {
+        console.log(err)
+        return res.send("err");
+        return res.redirect('/');
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 
