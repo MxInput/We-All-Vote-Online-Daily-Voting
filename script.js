@@ -1,4 +1,5 @@
 function start() {
+    const fs = require('fs')
     let loginForm = document.getElementById('loginForm')
     let signUpForm = document.getElementById('signUpForm')
 
@@ -23,22 +24,17 @@ function start() {
             let convertedValues = JSON.stringify(values);
 
             let data = getUserData()
-            data.push(convertedValues)
-            fs.writeFileSync('login.json', JSON.stringify(data));
+            console.log(data)
         }
     });
 }
 
-function getUserData() {
-    return fetch('login.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => console.log(data))
-        .catch(error => console.error('Error fetching JSON:', error));
+async function getUserData() {
+    const response = await fetch('login.json');
+
+    const data = await response.json();
+
+    return data
 }
 
 function showSignUp() {
