@@ -1,0 +1,114 @@
+[
+    {
+        "question": "Cats or Dogs?",
+        "choice1": "Cats",
+        "choice2": "Dogs",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Fantasy or Sci-Fi?",
+        "choice1": "Fantasy",
+        "choice2": "Sci-Fi",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Introvert or Extrovert?",
+        "choice1": "Introvert",
+        "choice2": "Extrovert",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Waffles or Pancakes?",
+        "choice1": "Waffles",
+        "choice2": "Pancakes",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Grey or Gray?",
+        "choice1": "Grey",
+        "choice2": "Gray",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Red or Blue?",
+        "choice1": "Red",
+        "choice2": "Blue",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Coffee or Tea?",
+        "choice1": "Coffee",
+        "choice2": "Tea",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Donut or Ice Cream?",
+        "choice1": "Donut",
+        "choice2": "Ice Cream",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Cake or Pie?",
+        "choice1": "Cake",
+        "choice2": "Pie",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Turtles or Tortoises?",
+        "choice1": "Turtles",
+        "choice2": "Tortoises",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Juice or Water?",
+        "choice1": "Juice",
+        "choice2": "Water",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Fruits or Vegetables?",
+        "choice1": "Fruits",
+        "choice2": "Vegetables",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Apples or Bananas?",
+        "choice1": "Apples",
+        "choice2": "Bananas",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Pineapple Pizza or Candy Corn?",
+        "choice1": "Pineapple Pizza",
+        "choice2": "Candy Corn",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Ketchup or Mustard?",
+        "choice1": "Ketchup",
+        "choice2": "Mustard",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Werewolves or Vampires?",
+        "choice1": "Werewolves",
+        "choice2": "Vampires",
+        "win": "",
+        "date": ""
+    }
+]
