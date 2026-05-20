@@ -11,14 +11,21 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
+app.use(express.static("public"));
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.sendFile('E:/Downloads/cook/public/signUp.html', function (err) {
+        if (err) {
+            console.error('Error sending file:', err);
+        }
+    }
+    )
 })
 
 app.get('/profile', (req, res) => {
-    res.send('You are viewing private profile info');
+    res.send("got profile")
 });
 
 app.post('/signUp', (req, res) => {
@@ -40,8 +47,7 @@ app.post('/signUp', (req, res) => {
 
         return res.redirect('/profile')
     } catch (err) {
-        return res.send("err")
-        return res.redirect('/signUp')
+        res.send('err')
     }
 })
 
@@ -62,7 +68,7 @@ app.post('/login', (req, res) => {
 
         throw new Error("User not found!")
     } catch (err) {
-        return res.send("err"), res.redirect('/')
+        return res.send('err')
     }
 })
 
