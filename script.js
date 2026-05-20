@@ -1,5 +1,4 @@
 function start() {
-    const fs = require('fs')
     let loginForm = document.getElementById('loginForm')
     let signUpForm = document.getElementById('signUpForm')
 
@@ -18,23 +17,11 @@ function start() {
             event.preventDefault();
         }
         else {
-            let values = new Object()
-            values.username = newUsername
-            values.password = newPassword
-            let convertedValues = JSON.stringify(values);
-
-            let data = getUserData()
-            console.log(data)
+            fetch('http://localhost:5000/')
+                .then(res => res.text())
         }
-    });
-}
-
-async function getUserData() {
-    const response = await fetch('login.json');
-
-    const data = await response.json();
-
-    return data
+    }
+    )
 }
 
 function showSignUp() {
