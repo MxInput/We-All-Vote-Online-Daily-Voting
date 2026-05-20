@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs')
 
 var users
 
@@ -7,19 +7,23 @@ fs.readFile("login.json", function (err, data) {
     users = JSON.parse(data)
 })
 
-const express = require('express');
+const express = require('express')
 const bodyParser = require('body-parser')
-const app = express();
+const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Hello World')
+})
+
+app.get('/profile', (req, res) => {
+    res.send('You are viewing private profile info');
 });
 
 app.post('/signUp', (req, res) => {
     try {
-        const { signUN, signPW, pWRepeat } = req.body;
+        const { signUN, signPW, pWRepeat } = req.body
 
         for (var foundUN in users) {
             if (signUN == foundUN) {
@@ -34,22 +38,21 @@ app.post('/signUp', (req, res) => {
             if (err) { console.log(err) }
         })
 
-        return res.send(`Registration successful, ${signUN}!`);
+        return res.redirect('/profile')
     } catch (err) {
-        return res.send("err");
-        return res.redirect('/');
+        return res.send("err")
+        return res.redirect('/signUp')
     }
-});
+})
 
 app.post('/login', (req, res) => {
     try {
-        const { logUN, logPW } = req.body;
+        const { logUN, logPW } = req.body
 
         for (var foundUN in users) {
             if (logUN == foundUN) {
                 if (logPW == users[foundUN]) {
-                    return res.send(`Login successful, ${logUN}!`);
-
+                    return res.redirect('/profile')
                 }
                 else {
                     throw new Error("Incorrect Password!")
@@ -59,13 +62,11 @@ app.post('/login', (req, res) => {
 
         throw new Error("User not found!")
     } catch (err) {
-        console.log(err)
-        return res.send("err");
-        return res.redirect('/');
+        return res.send("err"), res.redirect('/')
     }
-});
+})
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, console.log(
-    `Server started on port ${PORT}`));
+    `Server started on port ${PORT}`))

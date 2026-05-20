@@ -5,6 +5,11 @@ function start() {
     loginForm.addEventListener('submit', function (event) {
         var username = document.getElementById('logUN').value;
         var password = document.getElementById('logPW').value;
+
+        fetch('http://localhost:8080/profile')
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
     });
 
     signUpForm.addEventListener('submit', function (event) {
@@ -17,7 +22,7 @@ function start() {
             event.preventDefault();
         }
         else {
-            fetch('http://localhost:5000/signUp')
+            fetch('http://localhost:8080/profile')
                 .then(response => response.text())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
