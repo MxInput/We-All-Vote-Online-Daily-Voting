@@ -16,7 +16,29 @@ function start() {
             alert('Passwords do not match.');
             event.preventDefault();
         }
+        else {
+            let values = new Object()
+            values.username = newUsername
+            values.password = newPassword
+            let convertedValues = JSON.stringify(values);
+
+            let data = getUserData()
+            data.push(convertedValues)
+            fs.writeFileSync('login.json', JSON.stringify(data));
+        }
     });
+}
+
+function getUserData() {
+    return fetch('login.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => console.log(data))
+        .catch(error => console.error('Error fetching JSON:', error));
 }
 
 function showSignUp() {

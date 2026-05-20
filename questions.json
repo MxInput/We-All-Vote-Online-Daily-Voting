@@ -110,5 +110,509 @@
         "choice2": "Vampires",
         "win": "",
         "date": ""
+    },
+    {
+        "question": "Robots or Dinosaurs?",
+        "choice1": "Robots",
+        "choice2": "Dinosaurs",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Vacation or Staycation?",
+        "choice1": "Vacation",
+        "choice2": "Staycation",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Cash or Credit?",
+        "choice1": "Cash",
+        "choice2": "Credit",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Night Owl or Early Bird?",
+        "choice1": "Night Owl",
+        "choice2": "Early Bird",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "English or Math?",
+        "choice1": "English",
+        "choice2": "Math",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Pen or Pencil?",
+        "choice1": "Pen",
+        "choice2": "Pencil",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Money or Love?",
+        "choice1": "Money",
+        "choice2": "Love",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Expensive gift or Homemade gift?",
+        "choice1": "Expensive gift",
+        "choice2": "Homemade gift",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Chocolate or Vanilla?",
+        "choice1": "Chocolate",
+        "choice2": "Vanilla",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Beach or Pool?",
+        "choice1": "Beach",
+        "choice2": "Pool",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Halloween or Christmas?",
+        "choice1": "Halloween",
+        "choice2": "Christmas",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Zoo or Aquarium?",
+        "choice1": "Zoo",
+        "choice2": "Aquarium",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Singing or Dancing?",
+        "choice1": "Singing",
+        "choice2": "Dancing",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Sweet or Sour?",
+        "choice1": "Sweet",
+        "choice2": "Sour",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Telekinesis or Telepathy?",
+        "choice1": "Telekinesis",
+        "choice2": "Telepathy",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Pizza or Pasta?",
+        "choice1": "Pizza",
+        "choice2": "Pasta",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Romance or Thriller?",
+        "choice1": "Romance",
+        "choice2": "Thriller",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Short Stories or Novels?",
+        "choice1": "Short Stories",
+        "choice2": "Novels",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "2D or 3D?",
+        "choice1": "2D",
+        "choice2": "3D",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Long trips or Short trips?",
+        "choice1": "Long trips",
+        "choice2": "Short trips",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Gardening or Cooking?",
+        "choice1": "Gardening",
+        "choice2": "Cooking",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "PC or Console?",
+        "choice1": "PC",
+        "choice2": "Console",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Comedy or Horror?",
+        "choice1": "Comedy",
+        "choice2": "Horror",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Popcorn or Candy?",
+        "choice1": "Popcorn",
+        "choice2": "Candy",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Villains or Heroes?",
+        "choice1": "Villains",
+        "choice2": "Heroes",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Maps or GPS?",
+        "choice1": "Maps",
+        "choice2": "GPS",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Amusement Park or Museum?",
+        "choice1": "Amusement Park",
+        "choice2": "Museum",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Board Games or Card Games?",
+        "choice1": "Board Games",
+        "choice2": "Card Games",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Rock Music or Country Music?",
+        "choice1": "Rock Music",
+        "choice2": "Country Music",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Burgers or Hotdogs?",
+        "choice1": "Burgers",
+        "choice2": "Hotdogs",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Steak or Salmon?",
+        "choice1": "Steak",
+        "choice2": "Salmon",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Croissants or Bagels?",
+        "choice1": "Croissants",
+        "choice2": "Bagels",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "E-Books or Physical Books?",
+        "choice1": "E-Books",
+        "choice2": "Physical Books",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Chicken wings or Drumsticks?",
+        "choice1": "Chicken wings",
+        "choice2": "Drumsticks",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Collecting or Creating?",
+        "choice1": "Collecting",
+        "choice2": "Creating",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Guitar or Piano?",
+        "choice1": "Guitar",
+        "choice2": "Piano",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Sneakers or Sandals?",
+        "choice1": "Sneakers",
+        "choice2": "Sandals",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Cookies or Brownies?",
+        "choice1": "Cookies",
+        "choice2": "Brownies",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Bath or Shower?",
+        "choice1": "Bath",
+        "choice2": "Shower",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Crust or No Crust on Sandwiches?",
+        "choice1": "Crust",
+        "choice2": "No Crust",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Swimming or Building sandcastles?",
+        "choice1": "Swimming",
+        "choice2": "Building sandcastles",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Batman or Superman?",
+        "choice1": "Batman",
+        "choice2": "Superman",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "TV or Movies?",
+        "choice1": "TV",
+        "choice2": "Movies",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Running or Walking?",
+        "choice1": "Running",
+        "choice2": "Walking",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Football or Soccer?",
+        "choice1": "Football",
+        "choice2": "Soccer",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Outer space or Bottom of the ocean?",
+        "choice1": "Outer space",
+        "choice2": "Bottom of the ocean",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Winter or Summer?",
+        "choice1": "Winter",
+        "choice2": "Summer",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Ninjas or Pirates?",
+        "choice1": "Ninjas",
+        "choice2": "Pirates",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Dragons or Unicorns?",
+        "choice1": "Dragons",
+        "choice2": "Unicorns",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Lions or Tigers?",
+        "choice1": "Lions",
+        "choice2": "Tigers",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Sun or Moon?",
+        "choice1": "Sun",
+        "choice2": "Moon",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Gold or Silver?",
+        "choice1": "Gold",
+        "choice2": "Silver",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Pandas or Koalas?",
+        "choice1": "Pandas",
+        "choice2": "Koalas",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Calling or Texting?",
+        "choice1": "Calling",
+        "choice2": "Texting",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Dine-in or Delivery?",
+        "choice1": "Dine-in",
+        "choice2": "Delivery",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Concert or Sports game?",
+        "choice1": "Concert",
+        "choice2": "Sports game",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Slow-walker or Fast-walker?",
+        "choice1": "Slow-walker",
+        "choice2": "Fast-walker",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Big family or Small family?",
+        "choice1": "Big family",
+        "choice2": "Small family",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "No company or Bad company?",
+        "choice1": "No company",
+        "choice2": "Bad company",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "See the future or Change the past?",
+        "choice1": "See the future",
+        "choice2": "Change the past",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Speed or Accuracy?",
+        "choice1": "Speed",
+        "choice2": "Accuracy",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Visual Learner or Verbal Learner?",
+        "choice1": "Visual Learner",
+        "choice2": "Verbal Learner",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Leader or Follower?",
+        "choice1": "Leader",
+        "choice2": "Follower",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Geometry or Algebra?",
+        "choice1": "Geometry",
+        "choice2": "Algebra",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Multiple choice or Short answer?",
+        "choice1": "Multiple choice",
+        "choice2": "Short answer",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Gym or Art?",
+        "choice1": "Gym",
+        "choice2": "Art",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Roller coasters or Water slides?",
+        "choice1": "Roller coasters",
+        "choice2": "Water slides",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Plans or Surprises?",
+        "choice1": "Plans",
+        "choice2": "Surprises",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Shop online or Shop in-store?",
+        "choice1": "Shop online",
+        "choice2": "Shop in-store",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "French fries or Onion rings?",
+        "choice1": "French fries",
+        "choice2": "Onion rings",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Passenger or Driver?",
+        "choice1": "Passenger",
+        "choice2": "Driver",
+        "win": "",
+        "date": ""
+    },
+    {
+        "question": "Car or Bike?",
+        "choice1": "Car",
+        "choice2": "Bike",
+        "win": "",
+        "date": ""
     }
 ]
