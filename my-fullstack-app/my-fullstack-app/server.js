@@ -9,12 +9,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { sign } = require('crypto')
 const app = express()
-
-app.use(express.static("public"))
+app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.set('view engine', 'ejs');
+app.use(express.static("public"))
 
 app.get('/', (req, res) => {
     res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
@@ -28,9 +27,8 @@ app.get('/', (req, res) => {
     )
 })
 
-app.get('/profile', (req, res) => {
-    return res.send("got profile")
-    return res.sendStatus(200)
+app.get('/profile/:username', (req, res) => {
+    return res.render('voting', { text: req.params.username })
 });
 
 app.post('/signUp', (req, res) => {
@@ -39,7 +37,7 @@ app.post('/signUp', (req, res) => {
 
         for (var foundUN in users) {
             if (signUN == foundUN) {
-                throw new Error("Username found already!")
+                throw new Error("Username already exists!")
             }
         }
 
@@ -50,14 +48,10 @@ app.post('/signUp', (req, res) => {
             if (err) { console.log(err) }
         })
 
-        return res.redirect('/profile')
+        return res.redirect(`/profile/${signUN}`)
     } catch (err) {
-        res.send({ 'message': err })
+        return res.render('signUp', { text: err })
     }
-})
-
-app.get('/login', (req, res) => {
-    res.render('signUp')
 })
 
 app.post('/login', (req, res) => {
@@ -67,7 +61,7 @@ app.post('/login', (req, res) => {
         for (var foundUN in users) {
             if (logUN == foundUN) {
                 if (logPW == users[foundUN]) {
-                    return res.redirect('/profile')
+                    return res.redirect(`/profile/${logUN}`)
                 }
                 else {
                     throw new Error("Incorrect Password!")
@@ -77,12 +71,7 @@ app.post('/login', (req, res) => {
 
         throw new Error("User not found!")
     } catch (err) {
-        if (err == "User not found!") {
-            return res.status(404)
-        }
-        else {
-            return res.status(400)
-        }
+        return res.render('signUp', { text: err })
     }
 })
 

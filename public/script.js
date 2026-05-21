@@ -1,3 +1,16 @@
+function fetchHtml(data) {
+    fetch('http://localhost:8080/login', {
+        method: 'POST',
+        body: data
+    })
+        .then((response) => {
+            return response.text();
+        })
+        .then((html) => {
+            document.body.innerHTML = html
+        });
+}
+
 function start() {
     let loginForm = document.getElementById('loginForm')
     let signUpForm = document.getElementById('signUpForm')
@@ -6,10 +19,6 @@ function start() {
         var username = document.getElementById('logUN').value;
         var password = document.getElementById('logPW').value;
 
-        fetch('http://localhost:8080/login')
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
     });
 
     signUpForm.addEventListener('submit', function (event) {
@@ -20,12 +29,6 @@ function start() {
         if (newPassword !== confirmPassword) {
             alert('Passwords do not match.');
             event.preventDefault();
-        }
-        else {
-            fetch('http://localhost:8080/profile')
-                .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
         }
     }
     )
