@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.sendFile('E:/Downloads/cook/public/signUp.html', function (err) {
+    res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
         if (err) {
             res.sendStatus(500)
         }
@@ -57,7 +57,7 @@ app.post('/signUp', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.render('../public/signUp')
+    res.render('signUp')
 })
 
 app.post('/login', (req, res) => {
