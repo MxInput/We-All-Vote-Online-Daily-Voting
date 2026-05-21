@@ -6,7 +6,7 @@ function start() {
         var username = document.getElementById('logUN').value;
         var password = document.getElementById('logPW').value;
 
-        fetch('http://localhost:8080/profile')
+        fetch('http://localhost:8080/login')
             .then(response => response.text())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
