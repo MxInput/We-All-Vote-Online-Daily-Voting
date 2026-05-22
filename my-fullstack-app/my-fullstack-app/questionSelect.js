@@ -3,24 +3,24 @@ const fs = require('fs')
 const { get } = require('http')
 const { findPackageJSON } = require('module')
 
+var questions
+
 function fillQuestions(callback) {
     fs.readFile("questions.json", function (err, data) {
-        if (err) return callback(err)
+        if (err) return callback(err, null)
         callback(null, JSON.parse(data))
     })
 }
 
-function getQuestion() {
-    var questions
-
-    fillQuestions(function alter(err, result) {
+function activateQuestion() {
+    fillQuestions(function assignQuestions(err, result) {
         questions = result
 
-        console.log(result)
+        selectQuestion()
     })
+}
 
-    console.log(questions)
-
+function getQuestion() {
     let foundQuestion
 
     var today = new Date();
@@ -39,16 +39,12 @@ function getQuestion() {
     return undefined
 }
 
-getQuestion()
-
 function selectQuestion() {
     if (getQuestion() != undefined) {
         return getQuestion()
     }
     else {
-        let questions = fillQuestions()
-
-        let random = Math.floor(Math.random(0, Object.keys(questions).length - 1))
+        let random = Math.floor(Math.random() * Object.keys(questions).length)
         let selected = undefined
         let able = false
         for (let i = 0; i < Object.keys(questions).length; i++) {
@@ -66,8 +62,10 @@ function selectQuestion() {
                     var yyyy = today.getFullYear()
 
                     today = mm + '/' + dd + '/' + yyyy;
-
                     questions[random]["date"] = today
+                    fs.writeFile("questions.json", JSON.stringify(questions), (err) => {
+                        if (err) { console.log(err) }
+                    })
                     return questions[random]
                 }
                 random = Math.floor(Math.random(0, Object.keys(questions).length - 1))
@@ -80,6 +78,6 @@ function selectQuestion() {
 }
 
 module.exports = {
-    getQuestion,
-    selectQuestion
+    activateQuestion,
+    getQuestion
 }

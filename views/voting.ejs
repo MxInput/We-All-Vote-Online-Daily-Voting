@@ -9,19 +9,23 @@
 </head>
 
 <body>
-    <h1> Welcome <%= username %>
+    <h1> Welcome to We All Vote, <%= username %>
     </h1>
 
-    <p>
+    <h3>
         <%= question %>
-    </p>
+    </h3>
 
-    <button>
-        <%= choice1 %>
-    </button>
-    <button>
-        <%= choice2 %>
-    </button>
+    <div class="center">
+        <form action="http://localhost:8080/voting" method="POST">
+            <button id="choice1" type="submit">
+                <%= choice1 %>
+            </button>
+            <button id="choice2" type="submit">
+                <%= choice2 %>
+            </button>
+        </form>
+    </div>
 
 
     <script src="/script.js"></script>

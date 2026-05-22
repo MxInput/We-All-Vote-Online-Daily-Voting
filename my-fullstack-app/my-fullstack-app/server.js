@@ -8,11 +8,11 @@ fs.readFile("login.json", function (err, data) {
 const express = require('express')
 const bodyParser = require('body-parser')
 const { sign } = require('crypto')
-const { getQuestion, selectQuestion } = require('./questionSelect')
+const { getQuestion, selectQuestion, activateQuestion } = require('./questionSelect')
 const app = express()
 app.set('view engine', 'ejs')
 
-selectQuestion()
+activateQuestion()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -31,13 +31,30 @@ app.get('/', (req, res) => {
 })
 
 app.get('/profile/:username', (req, res) => {
-    return res.render('voting', {
-        username: req.params.username,
-        choice1: "apple",
-        choice2: "banana",
-        question: "apple or banana"
-    })
+    let gotQuestion = getQuestion()
+    if (gotQuestion != undefined) {
+        return res.render('voting', {
+            username: req.params.username,
+            choice1: gotQuestion["choice1"],
+            choice2: gotQuestion["choice2"],
+            question: gotQuestion["question"]
+        })
+    }
+    else {
+        return res.render('votingErr', {
+            err: "No more questions"
+        })
+    }
 });
+
+app.post('/voting', (req, res) => {
+    try {
+        return res.render('votingCompleted', { username: "hi" })
+    } catch (err) {
+        return res.render('votingError', { text: err })
+    }
+})
+
 
 app.post('/signUp', (req, res) => {
     try {
