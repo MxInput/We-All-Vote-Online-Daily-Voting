@@ -6,10 +6,21 @@ fs.readFile("login.json", function (err, data) {
 })
 
 const express = require('express')
-const bodyParser = require('body-parser')
-const { sign } = require('crypto')
-const { getQuestion, selectQuestion, activateQuestion } = require('./questionSelect')
 const app = express()
+
+const session = require('express-session')
+
+const bodyParser = require('body-parser')
+
+const passport = require('passport')
+const jsonAuth = require('passport-json').Strategy
+
+const bcrypt = require('bcrypt')
+
+const { sign } = require('crypto')
+
+const { getQuestion, activateQuestion } = require('./questionSelect')
+
 app.set('view engine', 'ejs')
 
 activateQuestion()
@@ -17,6 +28,35 @@ activateQuestion()
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.static("public"))
+
+app.use(session(
+    {
+        secret: 'mysecretdontsteal',
+        resave: false,
+        saveUninitialized: false
+    }));
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.get('/logout', (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/login');
+    });
+});
+
+function isAuth(req, res, next) {
+    if (req.isAuth()) {
+        return next()
+    }
+    res.redirect('/login')
+}
+
+app.get('/login', (req, res) => {
+    res.render('signUp')
+})
 
 app.get('/', (req, res) => {
     res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
@@ -31,19 +71,24 @@ app.get('/', (req, res) => {
 })
 
 app.get('/profile/:username', (req, res) => {
-    let gotQuestion = getQuestion()
-    if (gotQuestion != undefined) {
-        return res.render('voting', {
-            username: req.params.username,
-            choice1: gotQuestion["choice1"],
-            choice2: gotQuestion["choice2"],
-            question: gotQuestion["question"]
-        })
+    if (req.session.authorized && req.session.user == req.params.username) {
+        let gotQuestion = getQuestion()
+        if (gotQuestion != undefined) {
+            return res.render('voting', {
+                username: req.params.username,
+                choice1: gotQuestion["choice1"],
+                choice2: gotQuestion["choice2"],
+                question: gotQuestion["question"]
+            })
+        }
+        else {
+            return res.render('votingErr', {
+                err: "No more questions"
+            })
+        }
     }
     else {
-        return res.render('votingErr', {
-            err: "No more questions"
-        })
+        res.redirect('/login')
     }
 });
 
@@ -69,8 +114,12 @@ app.post('/signUp', (req, res) => {
         let updatedUsers = users
         updatedUsers[`${signUN}`] = { password: `${signPW}`, responses: {} }
 
+        res.cookie('username', signUN, { secure: true })
+        req.session.user = signUN
+        req.session.authorized = true
+
         fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
-            if (err) { console.log(err) }
+            if (err) { throw err }
         })
 
         return res.redirect(`/profile/${signUN}`)
@@ -86,6 +135,9 @@ app.post('/login', (req, res) => {
         for (var foundUN in users) {
             if (logUN == foundUN) {
                 if (logPW == users[foundUN]["password"]) {
+                    res.cookie('username', logUN, { secure: true })
+                    req.session.user = logUN
+                    req.session.authorized = true
                     return res.redirect(`/profile/${logUN}`)
                 }
                 else {
