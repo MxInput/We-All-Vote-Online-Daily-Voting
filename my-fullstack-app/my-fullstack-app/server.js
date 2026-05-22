@@ -8,15 +8,15 @@ fs.readFile("login.json", function (err, data) {
 const express = require('express')
 const bodyParser = require('body-parser')
 const { sign } = require('crypto')
-const { getQuestion } = require('./questionSelect')
+const { getQuestion, selectQuestion } = require('./questionSelect')
 const app = express()
 app.set('view engine', 'ejs')
+
+selectQuestion()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.static("public"))
-
-getQuestion()
 
 app.get('/', (req, res) => {
     res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
@@ -31,7 +31,12 @@ app.get('/', (req, res) => {
 })
 
 app.get('/profile/:username', (req, res) => {
-    return res.render('voting', { text: req.params.username })
+    return res.render('voting', {
+        username: req.params.username,
+        choice1: "apple",
+        choice2: "banana",
+        question: "apple or banana"
+    })
 });
 
 app.post('/signUp', (req, res) => {
