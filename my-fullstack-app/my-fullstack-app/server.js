@@ -12,13 +12,6 @@ const session = require('express-session')
 
 const bodyParser = require('body-parser')
 
-const passport = require('passport')
-const jsonAuth = require('passport-json').Strategy
-
-const bcrypt = require('bcrypt')
-
-const { sign } = require('crypto')
-
 const { getQuestion, activateQuestion } = require('./questionSelect')
 
 app.set('view engine', 'ejs')
@@ -33,12 +26,13 @@ app.use(session(
     {
         secret: 'mysecretdontsteal',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 3600000
+        }
     }));
-app.use(passport.initialize())
-app.use(passport.session())
 
-app.get('/logout', (req, res) => {
+app.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) {
             return next(err);
@@ -46,13 +40,6 @@ app.get('/logout', (req, res) => {
         res.redirect('/login');
     });
 });
-
-function isAuth(req, res, next) {
-    if (req.isAuth()) {
-        return next()
-    }
-    res.redirect('/login')
-}
 
 app.get('/login', (req, res) => {
     res.render('signUp')
@@ -94,9 +81,59 @@ app.get('/profile/:username', (req, res) => {
 
 app.post('/voting', (req, res) => {
     try {
-        return res.render('votingCompleted', { username: "hi" })
-    } catch (err) {
-        return res.render('votingError', { text: err })
+        let found = false
+
+        if (req.session.user) {
+            for (var foundUN in users) {
+                if (req.session.user == foundUN) {
+                    found = true
+                    foundResponses = users[req.session.user]["responses"]
+                    if (foundResponses) {
+                        let question = getQuestion()
+
+                        if (foundResponses[question["question"]] != undefined) {
+                            throw new Error("Already Voted")
+                        }
+                        else {
+                            let newEntry
+
+                            if (req.body.hasOwnProperty("choice1")) {
+                                newEntry = { [question["question"]]: "choice1" }
+                            } else {
+                                newEntry = { [question["question"]]: "choice2" }
+                            }
+
+                            foundResponses[question["question"]] = newEntry
+
+                            let updatedUsers = users
+                            updatedUsers[`${req.session.user}`] = { password: users[req.session.user]["password"], responses: foundResponses }
+
+                            fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
+                                if (err) { throw err }
+                            })
+                        }
+                    }
+                    res.render('votingCompleted', { username: req.session.user })
+                }
+            }
+            if (!found) {
+                throw new Error("User doesn't exist")
+            }
+        }
+        else {
+            throw new Error("Invalid Session")
+        }
+    }
+    catch (err) {
+        console.log(err)
+        if (err.text == "Already Voted") {
+            res.render('votingErr', {
+                err: err
+            })
+        }
+        else {
+            res.redirect('/login')
+        }
     }
 })
 
