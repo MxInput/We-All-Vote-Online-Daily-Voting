@@ -1,16 +1,3 @@
-function fetchHtml(data) {
-    fetch('http://localhost:8080/login', {
-        method: 'POST',
-        body: data
-    })
-        .then((response) => {
-            return response.text();
-        })
-        .then((html) => {
-            document.body.innerHTML = html
-        });
-}
-
 function start() {
     let loginForm = document.getElementById('loginForm')
     let signUpForm = document.getElementById('signUpForm')

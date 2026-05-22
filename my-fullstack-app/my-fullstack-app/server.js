@@ -8,12 +8,15 @@ fs.readFile("login.json", function (err, data) {
 const express = require('express')
 const bodyParser = require('body-parser')
 const { sign } = require('crypto')
+const { getQuestion } = require('./questionSelect')
 const app = express()
 app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(express.static("public"))
+
+getQuestion()
 
 app.get('/', (req, res) => {
     res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
@@ -42,7 +45,7 @@ app.post('/signUp', (req, res) => {
         }
 
         let updatedUsers = users
-        updatedUsers[`${signUN}`] = `${signPW}`
+        updatedUsers[`${signUN}`] = { password: `${signPW}`, responses: {} }
 
         fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
             if (err) { console.log(err) }
@@ -60,7 +63,7 @@ app.post('/login', (req, res) => {
 
         for (var foundUN in users) {
             if (logUN == foundUN) {
-                if (logPW == users[foundUN]) {
+                if (logPW == users[foundUN]["password"]) {
                     return res.redirect(`/profile/${logUN}`)
                 }
                 else {

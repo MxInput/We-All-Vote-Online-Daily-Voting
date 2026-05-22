@@ -1,1 +1,10 @@
-{"a":"a","w":"w"}
+{
+    "c": {
+        "password": "c",
+        "responses": {}
+    },
+    "w": {
+        "password": "w",
+        "responses": {}
+    }
+}
