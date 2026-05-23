@@ -1,4 +1,5 @@
 const fs = require('fs')
+const fsP = require('fs').promises;
 const { constrainedMemory } = require('process')
 const { convertProcessSignalToExitCode } = require('util')
 
@@ -7,6 +8,19 @@ function fillQuestions(callback) {
         if (err) return callback(err, undefined)
         callback(undefined, JSON.parse(data))
     })
+}
+
+async function fillQuestions() {
+    try {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(fsP.readFile("questions.json", "utf8"))
+            }, 5000)
+        })
+    }
+    catch (err) {
+        throw new Error(err)
+    }
 }
 
 function getUser(user) {
@@ -39,47 +53,55 @@ function getPredictions(user) {
     }
 }
 
-function getActualAnswer(questions, question, choice) {
-    for (let i = 0; i < Object.keys(questions).length; i++) {
-        if (questions[i]["question"] == question) {
-            return questions[i][choice]
+async function getActualAnswer(questions, question, choice) {
+    try {
+        for (let i = 0; i < Object.keys(questions).length; i++) {
+            if (questions[i]["question"] == question) {
+                return await questions[i][choice]
+            }
         }
+        throw new Error("BAD")
     }
-
-    return undefined
+    catch (err) {
+        console.trace(err)
+        throw new Error(err)
+    }
 }
 
 async function getActualAnswers(user, look) {
     try {
-        let wanted = await fillQuestions(function getAnswer(err, result) {
-            let questions = result
-            let realChoices = []
+        let questions = await fillQuestions()
+        console.log(questions)
+        let realChoices = []
 
-            if (look == "pred") {
-                preds = getPredictions(user)
-                givenQuestions = Object.keys(preds)
-                choices = Object.values(preds)
-                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
+        if (look == "pred") {
+            console.log(questions)
+            preds = await getPredictions(user)
+            givenQuestions = Object.keys(preds)
+            choices = Object.values(preds)
+            for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                let answer = getActualAnswer(questions, givenQuestions[i], choices[i])
+                if (answer != "" && answer != undefined) {
+                    realChoices.push()
                 }
             }
-            else {
-                reses = getResponses(user)
-                givenQuestions = Object.keys(reses)
-                choices = Object.values(reses)
-                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
-                }
+            console.log("L", realChoices)
+        }
+        else {
+            reses = await getResponses(user)
+            givenQuestions = Object.keys(reses)
+            choices = Object.values(reses)
+            for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
             }
-            console.log(realChoices)
-            return realChoices
-        })
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        console.log(wanted)
-        return wanted
+        }
+        console.log("AA", realChoices)
+
+        return realChoices
     }
-    catch (error) {
-        console.error(error.message);
+    catch (err) {
+        console.trace(err)
+        throw new Error(err)
     }
 }
 
@@ -87,11 +109,12 @@ async function fillAnswers(user, callback) {
     let resChoices
     let predChoices
     try {
+        console.log(resChoices)
         resChoices = await getActualAnswers(user, "res")
         predChoices = await getActualAnswers(user, "pred")
-        console.log(resChoices)
-    } catch (error) {
-        console.error(error.message);
+    } catch (err) {
+        console.trace(err)
+        throw new Error(err)
     }
 
     callback(undefined, [resChoices, predChoices])

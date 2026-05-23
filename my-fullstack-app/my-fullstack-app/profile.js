@@ -69,10 +69,15 @@ router.post('/', (req, res) => {
                     let resChoices
                     let predChoices
 
-                    fillAnswers(req.session.user, function operate(err, result) {
-                        if (err) throw err
-                        resChoices = result[0]
-                        predChoices = result[1]
+                    fillAnswers(req.session.user, async function operate(err, result) {
+                        try {
+                            console.log(result)
+                            resChoices = await result[0]
+                            predChoices = await result[1]
+                        }
+                        catch (err) {
+                            throw new Error(err)
+                        }
                     })
 
                     res.render('stats', {
