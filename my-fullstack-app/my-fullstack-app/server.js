@@ -47,12 +47,9 @@ app.use('/voting', voting)
 app.use('/predicting', predicting)
 
 app.get('/', (req, res) => {
-    res.sendFile('E:/Downloads/cook/views/signUp.html', function (err) {
+    res.render('signUpNormal', function (err) {
         if (err) {
-            res.sendStatus(500)
-        }
-        else {
-            res.sendStatus(200)
+            console.log(err)
         }
     }
     )

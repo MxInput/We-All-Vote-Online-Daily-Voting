@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title> Sign Up </title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body onload="start()">
+    <h1> We All Vote - Online Daily Voting </h1>
+
+    <div class="center">
+        <button onclick="showSignUp()" id="signUpBtn">Sign Up</button>
+        <button onclick="showLogin()" id="loginBtn">Login</button>
+    </div>
+
+    <div id="signUpBlock" class="container">
+        <form action="http://localhost:8080/signUp" id="signUpForm" method="post">
+            <div class="container">
+                <h1>Sign Up</h1>
+                <hr>
+                <label for="uN"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" id="signUN" name="signUN" required>
+                </br>
+
+                <label for="pW"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="signPW" name="signPW" required>
+                </br>
+
+                <label for="pWRepeat"><b>Repeat Password</b></label>
+                <input type="password" placeholder="Repeat Password" id="pWRepeat" name="pWRepeat" required>
+                </br>
+
+                <div>
+                    <button class="cancel" type="button" onclick="closeSignUp()">Go Back</button>
+                    <button class="submit" type="submit">Sign Up</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="loginBlock" class="container">
+        <form action="http://localhost:8080/login" id="loginForm" method="post">
+            <div class="container">
+                <h1>Login</h1>
+                <hr>
+                <label for="uN"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" id="logUN" name="logUN" required>
+                </br>
+
+                <label for="pW"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" id="logPW" name="logPW" required>
+                </br>
+
+                <div>
+                    <button class="cancel" type="button" onclick="closeLogin()">Go Back</button>
+                    <button class="submit" type="submit">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

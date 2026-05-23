@@ -1,15 +1,8 @@
+
 function start() {
-    let loginForm = document.getElementById('loginForm')
     let signUpForm = document.getElementById('signUpForm')
 
-    loginForm.addEventListener('submit', function (event) {
-        var username = document.getElementById('logUN').value;
-        var password = document.getElementById('logPW').value;
-
-    });
-
     signUpForm.addEventListener('submit', function (event) {
-        var newUsername = document.getElementById('signUN').value;
         var newPassword = document.getElementById('signPW').value;
         var confirmPassword = document.getElementById('pWRepeat').value;
 
