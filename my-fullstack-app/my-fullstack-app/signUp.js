@@ -21,13 +21,13 @@ router.post('/', (req, res) => {
         req.session.user = signUN
         req.session.authorized = true
 
-        fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
+        fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
             if (err) { throw err }
         })
 
         return res.redirect(`/profile/${signUN}`)
     } catch (err) {
-        return res.render('signUp', { text: err })
+        return res.render('login/signUp', { text: err })
     }
 })
 

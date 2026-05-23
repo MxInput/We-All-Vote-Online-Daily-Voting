@@ -3,7 +3,7 @@ const router = express.Router()
 
 // default page
 router.get('/', (req, res) => {
-    res.render('signUp')
+    res.render('login/signUp')
 })
 
 // login
@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 
         throw new Error("User not found!")
     } catch (err) {
-        return res.render('signUp', { text: err })
+        return res.render('login/signUp', { text: err })
     }
 })
 

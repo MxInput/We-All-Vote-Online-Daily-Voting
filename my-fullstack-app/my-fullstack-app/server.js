@@ -15,7 +15,7 @@ app.use(session(
         }
     }));
 
-fs.readFile("login.json", function (err, data) {
+fs.readFile("data/login.json", function (err, data) {
     if (err) throw err
     users = JSON.parse(data)
 })
@@ -47,7 +47,7 @@ app.use('/voting', voting)
 app.use('/predicting', predicting)
 
 app.get('/', (req, res) => {
-    res.render('signUpNormal', function (err) {
+    res.render('login/signUpNormal', function (err) {
         if (err) {
             console.log(err)
         }

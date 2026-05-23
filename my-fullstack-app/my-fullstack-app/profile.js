@@ -9,12 +9,12 @@ router.get('/:username', (req, res) => {
     if (req.session.authorized && req.session.user == req.params.username) {
         let gotQuestion = getQuestion()
         if (gotQuestion != undefined) {
-            return res.render('profile', {
+            return res.render('userPage/profile', {
                 username: req.params.username
             })
         }
         else {
-            return res.render('votingErr', {
+            return res.render('userPage/votingErr', {
                 err: "No more questions"
             })
         }
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
                         }
                     }
 
-                    res.render('voting', {
+                    res.render('userPage/voting', {
                         username: req.session.user,
                         choice1: gotQuestion["choice1"],
                         choice2: gotQuestion["choice2"],
@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
                         }
                     }
 
-                    res.render('predicting', {
+                    res.render('userPage/predicting', {
                         username: req.session.user,
                         choice1: gotQuestion["choice1"],
                         choice2: gotQuestion["choice2"],
@@ -69,23 +69,26 @@ router.post('/', (req, res) => {
                     let resChoices
                     let predChoices
 
-                    fillAnswers(req.session.user, async function operate(err, result) {
+                    fillAnswers(req.session.user, function operate(err, result) {
                         try {
-                            console.log(result)
-                            resChoices = await result[0]
-                            predChoices = await result[1]
+                            shownResChoices = result[0]
+                            shownPredChoices = result[1]
+
+                            let shownResponses = Object.keys(getResponses(req.session.user))
+                            let shownPredictions = Object.keys(getPredictions(req.session.user))
+
+                            res.render('userPage/stats', {
+                                responses: shownResponses,
+                                resChoices: shownResChoices,
+                                predictions: shownPredictions,
+                                predChoices: shownPredChoices
+                            })
                         }
                         catch (err) {
-                            throw new Error(err)
+                            res.render('userPage/votingError', {
+                                err: err
+                            })
                         }
-                    })
-
-                    res.render('stats', {
-                        username: req.session.user,
-                        responses: getResponses(req.session.user),
-                        resChoices: resChoices,
-                        predictions: getPredictions(req.session.user),
-                        predChoices: predChoices
                     })
                 }
                 else {
@@ -93,7 +96,7 @@ router.post('/', (req, res) => {
                 }
             }
             else {
-                return res.render('votingErr', {
+                return res.render('userPage/votingErr', {
                     err: "No more questions"
                 })
             }
@@ -104,9 +107,12 @@ router.post('/', (req, res) => {
     }
     catch (err) {
         if (err.message == "Already Voted") {
-            res.render('votingError', {
-                err: err
+            res.render('userPage/votingError', {
+                err: "Already Voted"
             })
+        }
+        else {
+            res.redirect('/login')
         }
     }
 })

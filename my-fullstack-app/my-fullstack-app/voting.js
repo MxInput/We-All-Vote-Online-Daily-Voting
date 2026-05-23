@@ -37,12 +37,12 @@ router.post('/', (req, res) => {
                             let updatedUsers = users
                             updatedUsers[`${req.session.user}`] = { password: users[req.session.user]["password"], responses: foundResponses, predictions: users[req.session.user]["predictions"] }
 
-                            fs.writeFile("login.json", JSON.stringify(updatedUsers), (err) => {
+                            fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
                                 if (err) { throw err }
                             })
                         }
                     }
-                    res.render('votingCompleted', { username: req.session.user })
+                    res.render('userPage/votingCompleted', { username: req.session.user })
                 }
             }
             if (!found) {
@@ -56,8 +56,8 @@ router.post('/', (req, res) => {
     catch (err) {
         console.log(err)
         if (err.message == "Already Voted") {
-            res.render('votingError', {
-                err: err
+            res.render('userPage/votingError', {
+                err: "Already Voted"
             })
         }
         else {

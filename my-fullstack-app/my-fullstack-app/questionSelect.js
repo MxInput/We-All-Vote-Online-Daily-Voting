@@ -6,7 +6,7 @@ const { findPackageJSON } = require('module')
 var questions
 
 function fillQuestions(callback) {
-    fs.readFile("questions.json", function (err, data) {
+    fs.readFile("data/questions.json", function (err, data) {
         if (err) return callback(err, null)
         callback(null, JSON.parse(data))
     })
@@ -34,7 +34,7 @@ function addVote(vote) {
 
     questions[currentQuestion["question"]] = currentQuestion
 
-    fs.writeFile('questions.json', JSON.stringify(questions), (err) => {
+    fs.writeFile('data/questions.json', JSON.stringify(questions), (err) => {
         if (err) {
             return
         }
@@ -86,7 +86,7 @@ function selectQuestion() {
                     today = mm + '/' + dd + '/' + yyyy;
                     selected = questions[random]
                     questions[random]["date"] = today
-                    fs.writeFile("questions.json", JSON.stringify(questions), (err) => {
+                    fs.writeFile("data/questions.json", JSON.stringify(questions), (err) => {
                         if (err) { console.log(err) }
                     })
                     return questions[random]
