@@ -30,6 +30,12 @@ hr {
     width: 25%;
 }
 
+.profileBtn {
+    background-color: rgb(127, 106, 223);
+    box-shadow: 0px 3px rgb(63, 41, 160);
+    width: 20%;
+}
+
 input,
 label {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
                             })
                         }
                     }
-                    res.render('predicting', { username: req.session.user, question: question["question"], choice1: question["choice1"], choice2: question["choice2"] })
+                    res.render('votingCompleted', { username: req.session.user })
                 }
             }
             if (!found) {

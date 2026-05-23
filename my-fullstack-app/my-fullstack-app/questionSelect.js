@@ -42,8 +42,6 @@ function addVote(vote) {
 }
 
 function getQuestion() {
-    let foundQuestion
-
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0')
     var mm = String(today.getMonth() + 1).padStart(2, '0')
@@ -68,6 +66,7 @@ function selectQuestion() {
         let random = Math.floor(Math.random() * Object.keys(questions).length)
         let selected = undefined
         let able = false
+        let questionsPassed = 0
         for (let i = 0; i < Object.keys(questions).length; i++) {
             if (questions[i]["date"] == "") {
                 able = true
@@ -75,21 +74,24 @@ function selectQuestion() {
             }
         }
         if (able == true) {
-            while (selected == undefined) {
+            while (selected == undefined || questionsPassed < Object.keys(questions).length) {
                 if (questions[random]["date"] == "") {
+                    questionsPassed += 1
+
                     var today = new Date();
                     var dd = String(today.getDate()).padStart(2, '0')
                     var mm = String(today.getMonth() + 1).padStart(2, '0')
                     var yyyy = today.getFullYear()
 
                     today = mm + '/' + dd + '/' + yyyy;
+                    selected = questions[random]
                     questions[random]["date"] = today
                     fs.writeFile("questions.json", JSON.stringify(questions), (err) => {
                         if (err) { console.log(err) }
                     })
                     return questions[random]
                 }
-                random = Math.floor(Math.random(0, Object.keys(questions).length - 1))
+                random = Math.floor(Math.random() * Object.keys(questions).length)
             }
         }
         else {

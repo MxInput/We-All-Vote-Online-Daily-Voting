@@ -3,16 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title> Vote Considered </title>
+    <title> Voting </title>
     <link href="/style.css" rel="stylesheet" type="text/css" />
 
 </head>
 
 <body>
-    <h1> Thank you for voting <%= username %> !
+    <h1> Welcome to We All Vote, <%= username %>
     </h1>
 
-    <form method="post" action="http://localhost:8080/profile"><button>Go Home</button></form>
+
+    <button onclick="history.back()">Go Back</button>
 
     <script src="/script.js"></script>
 </body>

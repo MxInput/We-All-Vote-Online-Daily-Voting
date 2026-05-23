@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title> Profile </title>
+    <link href="/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <h1> Welcome to We All Vote, <%= username %>
+    </h1>
+    <div class="center">
+        <form action="http://localhost:8080/profile/" method="post">
+
+            <button class="profileBtn" name="choice1" type="submit">
+                VOTE
+            </button>
+            <button class="profileBtn" name="choice2" type="submit">
+                PREDICT
+            </button>
+            <button class="profileBtn" name="choice3" type="submit">
+                VIEW STATS
+            </button>
+
+        </form>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>
