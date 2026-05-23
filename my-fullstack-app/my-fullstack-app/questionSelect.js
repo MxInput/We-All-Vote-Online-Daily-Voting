@@ -1,10 +1,5 @@
-const { json } = require('body-parser')
 const fs = require('fs')
-const { get } = require('http')
-const { findPackageJSON } = require('module')
-const { Error } = require('mongoose')
 const { getUser } = require('./populateStats')
-const { count } = require('console')
 
 var questions
 
@@ -111,12 +106,13 @@ function getPreviousCount(question) {
         var yyyy = today.getFullYear()
 
         today = mm + '/' + dd + '/' + yyyy;
-        console.log("TODAY", today)
-        console.log("QS", questions[i]["date"])
 
-        if (questions[i]["date"] != today) {
-            if (questions[i]["question"] == question) {
-                return [questions[i]["choice1Count"], questions[i]["choice2Count"]]
+        console.log(today)
+
+        if (questions[Object.keys(questions)[i]]["date"] != today) {
+
+            if (questions[Object.keys(questions)[i]]["question"] == question) {
+                return questions[Object.keys(questions)[i]]["choice1Count"], questions[Object.keys(questions)[i]]["choice2Count"]
             }
         }
     }
@@ -124,38 +120,47 @@ function getPreviousCount(question) {
 }
 
 function fillPrevious(user) {
-    let foundUser = getUser(user)
+    try {
+        let foundUser = getUser(user)
+        console.log(foundUser)
 
-    for (let i = 0; i < Object.keys(foundUser["predictions"]).length; i++) {
-        if (Object.values(Object.values(foundUser["predictions"])[i])[1] == true) {
-            let counts = getPreviousCount(Object.keys(foundUser["predictions"])[i])
-            if (counts != "incorrect") {
-                foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false
-                let count1 = counts[0]
-                let count2 = counts[1]
-                if (count1 == count2) {
-                    foundUser["points"] += 50
-                }
-                else if (count1 > count2) {
-                    if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice1") {
-                        foundUser["points"] += 100
+        for (let i = 0; i < Object.keys(foundUser["predictions"]).length; i++) {
+
+            if (Object.values(Object.values(foundUser["predictions"])[i])[1] == true) {
+
+                let counts = getPreviousCount(Object.keys(foundUser["predictions"])[i])
+                if (counts != "incorrect") {
+                    foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false
+                    let count1 = counts[0]
+                    let count2 = counts[1]
+
+                    if (count1 == count2) {
+                        foundUser["points"] += 50
                     }
-                }
-                else {
-                    if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice2") {
-                        foundUser["points"] += 100
+                    else if (count1 > count2) {
+                        if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice1") {
+                            foundUser["points"] += 100
+                        }
+                    }
+                    else {
+                        if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice2") {
+                            foundUser["points"] += 100
+                        }
                     }
                 }
             }
         }
-    }
-    let updatedUsers = users
-    updatedUsers[user] = foundUser
+        let updatedUsers = users
+        updatedUsers[user] = foundUser
 
-    fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
-        if (err) { throw err }
-    })
-    return
+        fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
+            if (err) { throw err }
+        })
+        return
+    }
+    catch (err) {
+        throw new Error(err)
+    }
 }
 
 module.exports = {

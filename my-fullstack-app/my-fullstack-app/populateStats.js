@@ -11,13 +11,17 @@ function fillQuestions(callback) {
 }
 
 function getUser(user) {
-    for (var foundUN in users) {
-        if (user == foundUN) {
-            return users[foundUN]
+    try {
+        for (var foundUN in users) {
+            if (user == foundUN) {
+                return users[foundUN]
+            }
         }
+        throw new Error("BAD")
     }
-
-    return false
+    catch {
+        throw new Error("BAD")
+    }
 }
 
 function getResponses(user) {
