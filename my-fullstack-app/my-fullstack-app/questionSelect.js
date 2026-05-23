@@ -117,7 +117,7 @@ function getPreviousCount(question) {
             }
         }
     }
-    return
+    return "incorrect"
 }
 
 function fillPrevious(user) {
@@ -125,27 +125,33 @@ function fillPrevious(user) {
 
     for (let i = 0; i < Object.keys(foundUser["predictions"]).length; i++) {
         if (Object.values(Object.values(foundUser["predictions"])[i])[1] == true) {
-            foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false
             let counts = getPreviousCount(Object.keys(foundUser["predictions"])[i])
-            let count1 = counts[0]
-            let count2 = counts[1]
-
-            if (count1 == count2) {
-                foundUser["points"] += 50
-            }
-            else if (count1 > count2) {
-                if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice1") {
-                    foundUser["points"] += 100
+            if (counts != "incorrect") {
+                foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false
+                let count1 = counts[0]
+                let count2 = counts[1]
+                if (count1 == count2) {
+                    foundUser["points"] += 50
+                }
+                else if (count1 > count2) {
+                    if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice1") {
+                        foundUser["points"] += 100
+                    }
+                }
+                else {
+                    if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice2") {
+                        foundUser["points"] += 100
+                    }
                 }
             }
-            else {
-                if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice2") {
-                    foundUser["points"] += 100
-                }
-            }
-            console.log(foundUser)
         }
     }
+    let updatedUsers = users
+    updatedUsers[user] = foundUser
+
+    fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
+        if (err) { throw err }
+    })
     return
 }
 

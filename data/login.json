@@ -1,17 +1,1 @@
-{
-    "c": {
-        "password": "c",
-        "responses": {},
-        "predictions": {
-            "Pandas or Koalas?": {
-                "choice": "choice1",
-                "active": true
-            },
-            "English or Math?": {
-                "choice": "choice1",
-                "active": true
-            }
-        },
-        "points": 0
-    }
-}
+{"c":{"password":"c","responses":{},"predictions":{"Shop online or Shop in-store?":{"choice":"choice2","active":false},"Pandas or Koalas?":{"choice":"choice1","active":false},"English or Math?":{"choice":"choice1","active":true}},"points":50},"aa":{"password":"aa","responses":{},"predictions":{},"points":0}}

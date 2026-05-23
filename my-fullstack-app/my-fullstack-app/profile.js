@@ -7,6 +7,7 @@ const { getResponses, getPredictions, fillAnswers, getUser } = require('./popula
 // profile
 router.get('/:username', (req, res) => {
     if (req.session.authorized && req.session.user == req.params.username) {
+        console.log("YES")
         let gotQuestion = getQuestion()
         if (gotQuestion != undefined) {
             return res.render('userPage/profile', {
@@ -20,6 +21,7 @@ router.get('/:username', (req, res) => {
         }
     }
     else {
+        console.log("NO")
         res.redirect('/login')
     }
 })
@@ -73,6 +75,7 @@ router.post('/', (req, res) => {
                         try {
                             shownResChoices = result[0]
                             shownPredChoices = result[1]
+                            shownResults = result[2]
 
                             let shownResponses = Object.keys(getResponses(req.session.user))
                             let shownPredictions = Object.keys(getPredictions(req.session.user))
@@ -84,7 +87,8 @@ router.post('/', (req, res) => {
                                 responses: shownResponses,
                                 resChoices: shownResChoices,
                                 predictions: shownPredictions,
-                                predChoices: shownPredChoices
+                                predChoices: shownPredChoices,
+                                results: shownResults
                             })
                         }
                         catch (err) {

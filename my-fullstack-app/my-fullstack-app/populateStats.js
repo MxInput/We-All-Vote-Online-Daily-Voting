@@ -53,7 +53,7 @@ function getPredictions(user) {
 function getActualAnswer(questions, question, choice) {
     for (let i = 0; i < Object.keys(questions).length; i++) {
         if (questions[i]["question"] == question) {
-            return questions[i][choice]
+            return [questions[i][choice["choice"]], questions[i]["choice1Count"], questions[i]["choice2Count"]]
         }
     }
     throw new Error("TRY AGAIN")
@@ -64,18 +64,35 @@ function getActualAnswers(user, look, callback) {
         const a = fillQuestions(function (err, data) {
             let questions = data
             let realChoices = []
+            let realStatus = []
 
             if (look == "pred") {
                 preds = getPredictions(user)
                 givenQuestions = Object.keys(preds)
                 choices = Object.values(preds)
                 for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    let answer = getActualAnswer(questions, givenQuestions[i], Object.values(choices[i])[0])
-                    if (answer != "" && answer != undefined) {
+                    let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
+                    if (answers != "" && answers != undefined) {
+                        let answer = answers[0]
+                        let c1 = answers[1]
+                        let c2 = answers[2]
+
+                        let status = "Wrong guess"
+
+                        if (c1 > c2 && choices[i] == "choice1") {
+                            status = "Correct prediction"
+                        }
+                        else if (c1 < c2 && choices[i] == "choice2") {
+                            status = "Correct prediction"
+                        }
+                        else if (c1 == c2) {
+                            status = "A tie"
+                        }
+
                         realChoices.push(answer)
+                        realStatus.push(status)
                     }
                     else {
-                        console.log("BAD")
                         throw new Error("TRY AGAIN")
                     }
                 }
@@ -85,18 +102,18 @@ function getActualAnswers(user, look, callback) {
                 givenQuestions = Object.keys(reses)
                 choices = Object.values(reses)
                 for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    let answer = getActualAnswer(questions, givenQuestions[i], choices[i])
-                    if (answer != "" && answer != undefined) {
+                    let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
+                    if (answers != "" && answers != undefined) {
+                        let answer = answers[0]
                         realChoices.push(answer)
                     }
                     else {
-                        console.log("BAD")
                         throw new Error("TRY AGAIN")
                     }
                 }
             }
 
-            callback(null, realChoices)
+            callback(null, [realChoices, realStatus])
         })
     }
     catch (err) {
@@ -107,10 +124,11 @@ function getActualAnswers(user, look, callback) {
 function fillAnswers(user, callback) {
     try {
         getActualAnswers(user, "res", function (err, result) {
-            let resChoices = result
+            let resChoices = result[0]
             getActualAnswers(user, "pred", function (err2, result2) {
-                let predChoices = result2
-                callback(undefined, [resChoices, predChoices])
+                let predChoices = result2[0]
+                let predStatus = result2[1]
+                callback(undefined, [resChoices, predChoices, predStatus])
             })
         })
     } catch (err) {
