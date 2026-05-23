@@ -70,7 +70,7 @@ function getActualAnswers(user, look, callback) {
                 givenQuestions = Object.keys(preds)
                 choices = Object.values(preds)
                 for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    let answer = getActualAnswer(questions, givenQuestions[i], choices[i])
+                    let answer = getActualAnswer(questions, givenQuestions[i], Object.values(choices[i])[0])
                     if (answer != "" && answer != undefined) {
                         realChoices.push(answer)
                     }
@@ -120,6 +120,7 @@ function fillAnswers(user, callback) {
 }
 
 module.exports = {
+    getUser,
     getResponses,
     getPredictions,
     fillAnswers

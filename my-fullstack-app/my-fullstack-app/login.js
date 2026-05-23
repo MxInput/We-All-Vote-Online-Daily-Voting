@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const { fillPrevious } = require('./questionSelect')
+
 // default page
 router.get('/', (req, res) => {
     res.render('login/signUp')
@@ -17,6 +19,8 @@ router.post('/', (req, res) => {
                     res.cookie('username', logUN, { secure: true })
                     req.session.user = logUN
                     req.session.authorized = true
+
+                    fillPrevious(logUN)
                     return res.redirect(`/profile/${logUN}`)
                 }
                 else {

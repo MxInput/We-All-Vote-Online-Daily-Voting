@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
         }
 
         let updatedUsers = users
-        updatedUsers[`${signUN}`] = { password: `${signPW}`, responses: {}, predictions: {} }
+        updatedUsers[`${signUN}`] = { password: `${signPW}`, responses: {}, predictions: {}, points: 0 }
 
         res.cookie('username', signUN, { secure: true })
         req.session.user = signUN

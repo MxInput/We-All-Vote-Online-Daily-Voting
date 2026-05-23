@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { getQuestion, activateQuestion, addVote } = require('./questionSelect')
-const { getResponses, getPredictions, fillAnswers } = require('./populateStats')
+const { getResponses, getPredictions, fillAnswers, getUser } = require('./populateStats')
 
 // profile
 router.get('/:username', (req, res) => {
@@ -77,7 +77,10 @@ router.post('/', (req, res) => {
                             let shownResponses = Object.keys(getResponses(req.session.user))
                             let shownPredictions = Object.keys(getPredictions(req.session.user))
 
+                            let points = getUser(req.session.user)["points"]
+
                             res.render('userPage/stats', {
+                                points: points,
                                 responses: shownResponses,
                                 resChoices: shownResChoices,
                                 predictions: shownPredictions,

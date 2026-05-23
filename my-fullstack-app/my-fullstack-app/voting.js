@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
                             foundResponses[question["question"]] = newEntry
 
                             let updatedUsers = users
-                            updatedUsers[`${req.session.user}`] = { password: users[req.session.user]["password"], responses: foundResponses, predictions: users[req.session.user]["predictions"] }
+                            updatedUsers[`${req.session.user}`] = { password: users[req.session.user]["password"], responses: foundResponses, predictions: users[req.session.user]["predictions"], points: users[req.session.user]["points"] }
 
                             fs.writeFile("data/login.json", JSON.stringify(updatedUsers), (err) => {
                                 if (err) { throw err }

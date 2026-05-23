@@ -2,6 +2,9 @@ const { json } = require('body-parser')
 const fs = require('fs')
 const { get } = require('http')
 const { findPackageJSON } = require('module')
+const { Error } = require('mongoose')
+const { getUser } = require('./populateStats')
+const { count } = require('console')
 
 var questions
 
@@ -100,8 +103,56 @@ function selectQuestion() {
     }
 }
 
+function getPreviousCount(question) {
+    for (let i = 0; i < Object.keys(questions).length; i++) {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0')
+        var mm = String(today.getMonth() + 1).padStart(2, '0')
+        var yyyy = today.getFullYear()
+
+        today = mm + '/' + dd + '/' + yyyy;
+        if (questions[i]["date"] != today) {
+            if (questions[i]["question"] == question) {
+                return [questions[i]["choice1Count"], questions[i]["choice2Count"]]
+            }
+        }
+    }
+    return
+}
+
+function fillPrevious(user) {
+    let foundUser = getUser(user)
+
+    for (let i = 0; i < Object.keys(foundUser["predictions"]).length; i++) {
+        if (Object.values(Object.values(foundUser["predictions"])[i])[1] == true) {
+            foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false
+            let counts = getPreviousCount(Object.keys(foundUser["predictions"])[i])
+            let count1 = counts[0]
+            let count2 = counts[1]
+
+            if (count1 == count2) {
+                foundUser["points"] += 50
+            }
+            else if (count1 > count2) {
+                if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice1") {
+                    foundUser["points"] += 100
+                }
+            }
+            else {
+                if (foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["choice"] == "choice2") {
+                    foundUser["points"] += 100
+                }
+            }
+            console.log(foundUser)
+        }
+    }
+    return
+}
+
 module.exports = {
+    fillPrevious,
     activateQuestion,
     getQuestion,
-    addVote
+    addVote,
+    getPreviousCount
 }
