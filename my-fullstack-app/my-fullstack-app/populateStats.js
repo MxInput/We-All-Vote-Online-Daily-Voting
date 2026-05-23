@@ -53,7 +53,12 @@ function getPredictions(user) {
 function getActualAnswer(questions, question, choice) {
     for (let i = 0; i < Object.keys(questions).length; i++) {
         if (questions[i]["question"] == question) {
-            return [questions[i][choice["choice"]], questions[i]["choice1Count"], questions[i]["choice2Count"]]
+            if (typeof choice === 'object' && !Array.isArray(choice) && choice !== null) {
+                return [questions[i][choice["choice"]], questions[i]["choice1Count"], questions[i]["choice2Count"]]
+            }
+            else {
+                return [questions[i][choice], questions[i]["choice1Count"], questions[i]["choice2Count"]]
+            }
         }
     }
     throw new Error("TRY AGAIN")
@@ -70,46 +75,72 @@ function getActualAnswers(user, look, callback) {
                 preds = getPredictions(user)
                 givenQuestions = Object.keys(preds)
                 choices = Object.values(preds)
-                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
-                    if (answers != "" && answers != undefined) {
-                        let answer = answers[0]
-                        let c1 = answers[1]
-                        let c2 = answers[2]
 
-                        let status = "Wrong guess"
+                if (Object.keys(givenQuestions).length > 0) {
+                    for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                        let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
+                        if (answers != "" && answers != undefined) {
+                            let answer = answers[0]
+                            let c1 = answers[1]
+                            let c2 = answers[2]
 
-                        if (c1 > c2 && choices[i] == "choice1") {
-                            status = "Correct prediction"
-                        }
-                        else if (c1 < c2 && choices[i] == "choice2") {
-                            status = "Correct prediction"
-                        }
-                        else if (c1 == c2) {
-                            status = "A tie"
-                        }
+                            let status = "Voting in Progress"
 
-                        realChoices.push(answer)
-                        realStatus.push(status)
+                            if (choices[i]["active"] == false) {
+
+                                if (c1 > c2 && choices[i]["choice"] == "choice1") {
+                                    status = "Correct prediction: " + Math.floor((c1 / (c1 + c2)) * 100) + "% majority!"
+                                }
+                                else if (c1 < c2 && choices[i]["choice"] == "choice2") {
+                                    status = "Correct prediction" + Math.floor((c2 / (c1 + c2)) * 100) + "% majority!"
+                                }
+                                else if (c1 == c2) {
+                                    status = "The results were a tie!"
+                                }
+                                else {
+                                    status = "Wrong guess"
+
+                                    if (choices[i] == "choice1") {
+                                        status += ", " + Math.floor((c1 / (c1 + c2))) + "% minority!"
+                                    }
+                                    else {
+                                        status += ", " + Math.floor((c2 / (c1 + c2))) + "% minority!"
+                                    }
+                                }
+                            }
+
+                            realChoices.push(answer)
+                            realStatus.push(status)
+                        }
+                        else {
+                            throw new Error("TRY AGAIN")
+                        }
                     }
-                    else {
-                        throw new Error("TRY AGAIN")
-                    }
+
+                }
+                else {
+                    realChoices.push("NO PREDICTIONS YET")
                 }
             }
             else {
                 reses = getResponses(user)
                 givenQuestions = Object.keys(reses)
                 choices = Object.values(reses)
-                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                    let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
-                    if (answers != "" && answers != undefined) {
-                        let answer = answers[0]
-                        realChoices.push(answer)
+
+                if (Object.keys(givenQuestions).length > 0) {
+                    for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                        let answers = getActualAnswer(questions, givenQuestions[i], choices[i])
+                        if (answers != "" && answers != undefined) {
+                            let answer = answers[0]
+                            realChoices.push(answer)
+                        }
+                        else {
+                            throw new Error("TRY AGAIN")
+                        }
                     }
-                    else {
-                        throw new Error("TRY AGAIN")
-                    }
+                }
+                else {
+                    realChoices.push("NO VOTES YET")
                 }
             }
 

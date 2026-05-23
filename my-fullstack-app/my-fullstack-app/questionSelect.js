@@ -111,6 +111,9 @@ function getPreviousCount(question) {
         var yyyy = today.getFullYear()
 
         today = mm + '/' + dd + '/' + yyyy;
+        console.log("TODAY", today)
+        console.log("QS", questions[i]["date"])
+
         if (questions[i]["date"] != today) {
             if (questions[i]["question"] == question) {
                 return [questions[i]["choice1Count"], questions[i]["choice2Count"]]

@@ -11,28 +11,52 @@
 <body>
     <h1> Your Statistics </h1>
 
-    <h1> Points: <%= points %>
-    </h1>
+    <hr>
 
-    <h1> Questions
-    </h1>
-    <ul>
-        <% for(var i=0; i<responses.length; i++) { %>
-            <li>
-                <%= responses[i] + " " + resChoices[i] %>
-            </li>
-            <% } %>
-    </ul>
+    <h2> Points: <%= points %>
+    </h2>
 
-    <h1> Predictions
-    </h1>
-    <ul>
-        <% for(var i=0; i<predictions.length; i++) { %>
-            <li>
-                <%= predictions[i] + " " + predChoices[i] + ": " + results[i] %>
-            </li>
-            <% } %>
-    </ul>
+    <hr>
+
+    <h2> Questions
+    </h2>
+    <div class="center">
+        <ul>
+            <% if (responses.length> 0) { %>
+                <% for(var i=0; i<responses.length; i++) { %>
+                    <li>
+                        <%= responses[i] + " " + resChoices[i] %>
+                    </li>
+                    <% } %>
+                        <% } else { %>
+                            <li>
+                                <%= resChoices[0] %>
+                            </li>
+                            <% } %>
+
+
+        </ul>
+    </div>
+
+    <hr>
+
+    <h2> Predictions
+    </h2>
+    <div class="center">
+        <ul>
+            <% if (predictions.length> 0) { %>
+                <% for(var i=0; i<predictions.length; i++) { %>
+                    <li>
+                        <%= predictions[i] + " " + predChoices[i] + ": " + results[i] %>
+                    </li>
+                    <% } %>
+                        <% } else { %>
+                            <li>
+                                <%= predChoices[0] %>
+                            </li>
+                            <% } %>
+        </ul>
+    </div>
 
 
     <button onclick="history.back()">Go Back</button>
