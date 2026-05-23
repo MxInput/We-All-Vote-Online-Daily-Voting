@@ -99,35 +99,38 @@ function selectQuestion() {
 }
 
 function getPreviousCount(question) {
-    for (let i = 0; i < Object.keys(questions).length; i++) {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0')
-        var mm = String(today.getMonth() + 1).padStart(2, '0')
-        var yyyy = today.getFullYear()
+    try {
+        for (let i = 0; i < Object.keys(questions).length; i++) {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0')
+            var mm = String(today.getMonth() + 1).padStart(2, '0')
+            var yyyy = today.getFullYear()
 
-        today = mm + '/' + dd + '/' + yyyy;
-
-        console.log(today)
-
-        if (questions[Object.keys(questions)[i]]["date"] != today) {
+            today = mm + '/' + dd + '/' + yyyy;
 
             if (questions[Object.keys(questions)[i]]["question"] == question) {
-                return questions[Object.keys(questions)[i]]["choice1Count"], questions[Object.keys(questions)[i]]["choice2Count"]
+                if (questions[Object.keys(questions)[i]]["date"] != today) {
+                    return [questions[Object.keys(questions)[i]]["choice1Count"], questions[Object.keys(questions)[i]]["choice2Count"]]
+                }
+                else {
+                    return "incorrect"
+                }
             }
+
         }
+        throw new Error("BAD REQUEST")
     }
-    return "incorrect"
+    catch (err) {
+        throw new Error(err)
+    }
 }
 
 function fillPrevious(user) {
     try {
         let foundUser = getUser(user)
-        console.log(foundUser)
 
         for (let i = 0; i < Object.keys(foundUser["predictions"]).length; i++) {
-
             if (Object.values(Object.values(foundUser["predictions"])[i])[1] == true) {
-
                 let counts = getPreviousCount(Object.keys(foundUser["predictions"])[i])
                 if (counts != "incorrect") {
                     foundUser["predictions"][Object.keys(foundUser["predictions"])[i]]["active"] = false

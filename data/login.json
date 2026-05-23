@@ -13,13 +13,13 @@
             },
             "Pandas or Koalas?": {
                 "choice": "choice2",
-                "active": true
+                "active": false
             },
             "Shop online or Shop in-store?": {
                 "choice": "choice1",
-                "active": true
+                "active": false
             }
         },
-        "points": 0
+        "points": 150
     }
 }
