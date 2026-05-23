@@ -20,6 +20,27 @@ function activateQuestion() {
     })
 }
 
+function addVote(vote) {
+    let currentQuestion = getQuestion()
+
+    if (currentQuestion != undefined) {
+        if (vote == "choice1") {
+            currentQuestion["choice1Count"] += 1
+        }
+        else if (vote == "choice2") {
+            currentQuestion["choice2Count"] += 1
+        }
+    }
+
+    questions[currentQuestion["question"]] = currentQuestion
+
+    fs.writeFile('questions.json', JSON.stringify(questions), (err) => {
+        if (err) {
+            return
+        }
+    })
+}
+
 function getQuestion() {
     let foundQuestion
 
@@ -79,5 +100,6 @@ function selectQuestion() {
 
 module.exports = {
     activateQuestion,
-    getQuestion
+    getQuestion,
+    addVote
 }
