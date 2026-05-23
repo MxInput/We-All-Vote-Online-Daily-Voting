@@ -1,10 +1,11 @@
 const fs = require('fs')
+const { constrainedMemory } = require('process')
 const { convertProcessSignalToExitCode } = require('util')
 
 function fillQuestions(callback) {
     fs.readFile("questions.json", function (err, data) {
-        if (err) return callback(err, null)
-        callback(null, JSON.parse(data))
+        if (err) return callback(err, undefined)
+        callback(undefined, JSON.parse(data))
     })
 }
 
@@ -48,31 +49,56 @@ function getActualAnswer(questions, question, choice) {
     return undefined
 }
 
-function getActualAnswers(user, look) {
-    fillQuestions(function getAnswer(err, result) {
-        let questions = result
-        let realChoices = []
+async function getActualAnswers(user, look) {
+    try {
+        let wanted = await fillQuestions(function getAnswer(err, result) {
+            let questions = result
+            let realChoices = []
 
-        if (look == "pred") {
-            preds = getPredictions(user)
-            givenQuestions = Object.keys(preds)
-            choices = Object.values(preds)
-            for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
+            if (look == "pred") {
+                preds = getPredictions(user)
+                givenQuestions = Object.keys(preds)
+                choices = Object.values(preds)
+                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                    realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
+                }
             }
-        }
-        else {
-            reses = getResponses(user)
-            givenQuestions = Object.keys(reses)
-            choices = Object.values(reses)
-            for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
-                realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
+            else {
+                reses = getResponses(user)
+                givenQuestions = Object.keys(reses)
+                choices = Object.values(reses)
+                for (let i = 0; i < Object.keys(givenQuestions).length; i++) {
+                    realChoices.push(getActualAnswer(questions, givenQuestions[i], choices[i]))
+                }
             }
-        }
-        return realChoices
-    })
+            console.log(realChoices)
+            return realChoices
+        })
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        console.log(wanted)
+        return wanted
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+}
+
+async function fillAnswers(user, callback) {
+    let resChoices
+    let predChoices
+    try {
+        resChoices = await getActualAnswers(user, "res")
+        predChoices = await getActualAnswers(user, "pred")
+        console.log(resChoices)
+    } catch (error) {
+        console.error(error.message);
+    }
+
+    callback(undefined, [resChoices, predChoices])
 }
 
 module.exports = {
-    getActualAnswers
+    getResponses,
+    getPredictions,
+    fillAnswers
 }

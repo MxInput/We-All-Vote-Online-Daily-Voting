@@ -15,21 +15,21 @@
     <h1> Questions
     </h1>
     <ul>
-        <% Object.keys(responses).forEach(item=> { %>
+        <% for(var i=0; i<responses.length; i++) { %>
             <li>
-                <%= item + " " + responses[item] %>
+                <%= item + " " + resChoices[i] %>
             </li>
-            <% }) %>
+            <% } %>
     </ul>
 
     <h1> Predictions
     </h1>
     <ul>
-        <% Object.keys(predictions).forEach(item=> { %>
+        <% for(var i=0; i<predictions.length; i++) { %>
             <li>
-                <%= item + " " + predictions[item] %>
+                <%= item + " " + predChoices[i] %>
             </li>
-            <% }) %>
+            <% } %>
     </ul>
 
 

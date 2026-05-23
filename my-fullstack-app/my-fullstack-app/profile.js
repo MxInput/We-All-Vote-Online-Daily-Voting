@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const { getQuestion, activateQuestion, addVote } = require('./questionSelect')
-const { getActualAnswers } = require('./populateStats')
+const { getResponses, getPredictions, fillAnswers } = require('./populateStats')
 
 // profile
 router.get('/:username', (req, res) => {
@@ -66,14 +66,21 @@ router.post('/', (req, res) => {
                     })
                 }
                 else if (req.body.hasOwnProperty("choice3")) {
-                    let resChoices = getActualAnswers(req.session.user, "res")
-                    let predChoices = getActualAnswers(req.session.user, "pred")
+                    let resChoices
+                    let predChoices
 
-                    console.log(resChoices)
+                    fillAnswers(req.session.user, function operate(err, result) {
+                        if (err) throw err
+                        resChoices = result[0]
+                        predChoices = result[1]
+                    })
+
                     res.render('stats', {
                         username: req.session.user,
                         responses: getResponses(req.session.user),
-                        predictions: getPredictions(req.session.user)
+                        resChoices: resChoices,
+                        predictions: getPredictions(req.session.user),
+                        predChoices: predChoices
                     })
                 }
                 else {
