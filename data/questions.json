@@ -163,9 +163,9 @@
         "question": "English or Math?",
         "choice1": "English",
         "choice2": "Math",
-        "choice1Count": 8,
-        "choice2Count": 1,
-        "date": "05/23/2026"
+        "choice1Count": 0,
+        "choice2Count": 0,
+        "date": ""
     },
     {
         "question": "Pen or Pencil?",
@@ -547,9 +547,9 @@
         "question": "Pandas or Koalas?",
         "choice1": "Pandas",
         "choice2": "Koalas",
-        "choice1Count": 3,
-        "choice2Count": 3,
-        "date": "05/21/2026"
+        "choice1Count": 0,
+        "choice2Count": 0,
+        "date": ""
     },
     {
         "question": "Calling or Texting?",
@@ -675,9 +675,9 @@
         "question": "Shop online or Shop in-store?",
         "choice1": "Shop online",
         "choice2": "Shop in-store",
-        "choice1Count": 5,
+        "choice1Count": 0,
         "choice2Count": 0,
-        "date": "05/22/2026"
+        "date": ""
     },
     {
         "question": "French fries or Onion rings?",
