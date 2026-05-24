@@ -49,12 +49,7 @@ app.use('/voting', voting)
 app.use('/predicting', predicting)
 
 app.get('/', (req, res) => {
-    res.render('login/signUpNormal', function (err) {
-        if (err) {
-            console.log(err)
-        }
-    }
-    )
+    res.sendFile(path.join(__dirname, '/index.html'));
 })
 
 const PORT = process.env.PORT || 8080
